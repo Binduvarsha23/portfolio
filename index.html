@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bindu Varsha Sunkara – Portfolio</title>
+  <meta name="description" content="Portfolio of Bindu Varsha Sunkara – React.js Developer and Full‑Stack Enthusiast" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #0f172a; /* slate-900 */
+      --bg2: #1e293b; /* slate-800 */
+      --acc1: #38bdf8; /* sky-400 */
+      --acc2: #a78bfa; /* violet-400 */
+      --text: #e2e8f0; /* slate-200 */
+      --muted: #94a3b8; /* slate-400 */
+      --card: rgba(255,255,255,0.06);
+      --card-border: rgba(255,255,255,0.12);
+      --glass: rgba(15,23,42,0.5);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(120deg, var(--bg1), var(--bg2));
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient overlay */
+    .animated-bg {
+      position: fixed; inset: 0; z-index: -2;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(56,189,248,0.25), transparent 60%),
+                  radial-gradient(800px 400px at 90% 20%, rgba(167,139,250,0.25), transparent 60%),
+                  radial-gradient(1000px 500px at 30% 90%, rgba(16,185,129,0.18), transparent 60%);
+      animation: float 18s ease-in-out infinite alternate;
+      filter: saturate(110%);
+    }
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-20px) scale(1.02); }
+    }
+
+    /* Optional background GIF layer: replace URL below to use a GIF background */
+    .gif-bg { position: fixed; inset: 0; z-index: -3; opacity: 0.09; background: center/cover no-repeat url(''); }
+    /* Tip: paste a high-quality subtle loop GIF URL above (e.g. from your own assets). Leave empty for pure gradient. */
+
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
+
+    header {
+      padding: 72px 0 36px;
+      position: sticky; top: 0; backdrop-filter: blur(8px);
+      background: linear-gradient(to bottom, rgba(15,23,42,0.85), rgba(15,23,42,0));
+      border-bottom: 1px solid transparent;
+      z-index: 20;
+    }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .brand { font-weight: 800; letter-spacing: 0.4px; }
+    .brand span { background: linear-gradient(90deg, var(--acc1), var(--acc2)); -webkit-background-clip: text; color: transparent; }
+    .nav-links a { color: var(--muted); text-decoration: none; margin-left: 18px; font-weight: 600; font-size: 0.95rem; }
+    .nav-links a:hover { color: var(--text); }
+
+    .hero { padding: 36px 0 24px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 24px; align-items: center; }
+    .hero h1 { font-size: clamp(2rem, 1.2rem + 3.5vw, 3.5rem); margin: 0 0 12px; line-height: 1.05; }
+    .hero p.lead { color: var(--muted); margin: 0 0 16px; font-size: 1.05rem; }
+    .chipbar { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 20px; }
+    .chip { padding: 8px 12px; border-radius: 999px; border: 1px solid var(--card-border); background: var(--card); font-size: 0.9rem; }
+
+    .cta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn { padding: 10px 14px; border-radius: 10px; font-weight: 700; border: 1px solid var(--card-border); background: var(--glass); color: var(--text); text-decoration: none; }
+    .btn.primary { background: linear-gradient(90deg, var(--acc1), var(--acc2)); color: #0b1220; border: none; }
+    .btn:hover { transform: translateY(-1px); transition: transform .15s ease; }
+
+    .avatar { justify-self: center; width: 210px; height: 210px; border-radius: 50%; border: 2px solid var(--card-border); background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0)); display: grid; place-items: center; font-weight: 800; }
+
+    section { padding: 36px 0; }
+    h2 { font-size: 1.6rem; margin: 0 0 16px; letter-spacing: 0.2px; }
+
+    .grid { display: grid; gap: 16px; }
+    .grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+    @media (max-width: 900px) { .hero { grid-template-columns: 1fr; } .grid.cols-3 { grid-template-columns: 1fr; } .grid.cols-2 { grid-template-columns: 1fr; } }
+
+    .card { background: var(--card); border: 1px solid var(--card-border); border-radius: 16px; padding: 18px; }
+    .card h3 { margin: 0 0 6px; font-size: 1.15rem; }
+    .meta { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
+    .card .tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 12px; }
+    .tag { font-size: 0.8rem; padding: 6px 10px; border-radius: 999px; background: rgba(148,163,184,0.12); border: 1px solid var(--card-border); }
+    .card .actions { display: flex; flex-wrap: wrap; gap: 10px; }
+
+    .timeline { position: relative; padding-left: 20px; }
+    .timeline::before { content: ""; position: absolute; left: 10px; top: 0; bottom: 0; width: 2px; background: linear-gradient(var(--acc1), var(--acc2)); opacity: .4; }
+    .tl-item { position: relative; margin: 0 0 18px 0; }
+    .tl-item::before { content: ""; position: absolute; left: -3px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: linear-gradient(var(--acc1), var(--acc2)); box-shadow: 0 0 0 4px rgba(56,189,248,0.18); }
+
+    footer { padding: 26px 0 40px; color: var(--muted); text-align: center; border-top: 1px solid var(--card-border); background: rgba(2,6,23,0.4); }
+    footer a { color: var(--text); text-decoration: none; border-bottom: 1px dotted rgba(226,232,240,0.5); }
+    .small { font-size: 0.92rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="gif-bg"></div>
+  <div class="animated-bg"></div>
+
+  <header>
+    <div class="container">
+      <nav>
+        <div class="brand">Bindu <span>Varsha</span> Sunkara</div>
+        <div class="nav-links">
+          <a href="#projects">Projects</a>
+          <a href="#experience">Experience</a>
+          <a href="#skills">Skills</a>
+          <a href="#achievements">Achievements</a>
+          <a href="#education">Education</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>Full‑Stack Enthusiast • React.js Developer • ML Engineer</h1>
+        <p class="lead">B.Tech CSE (Data Science). I build fast, secure, and user‑focused web apps using React, TypeScript, Node, and MongoDB. I care about performance, DX, and clean UX.</p>
+        <div class="chipbar">
+          <div class="chip">React</div>
+          <div class="chip">TypeScript</div>
+          <div class="chip">Node & Express</div>
+          <div class="chip">MongoDB</div>
+          <div class="chip">Next.js</div>
+          <div class="chip">Tailwind</div>
+          <div class="chip">AWS / Vercel</div>
+          <div class="chip">Python</div>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="mailto:binduvarshasunkara@gmail.com">Hire Me</a>
+          <a class="btn" href="https://github.com/Binduvarsha23" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="http://www.linkedin.com/in/bindu-varsha-cse" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="btn" href="https://drive.google.com/file/d/1DRwdG3m-daJeyzMeIC4anR44X4O2fEyu/view?usp=drive_link" target="_blank" rel="noreferrer">Resume</a>
+        </div>
+      </div>
+      <div class="avatar">BV</div>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid cols-3">
+        <!-- TextUtils -->
+        <article class="card">
+          <h3>TextUtils – Text Conversion & Translation</h3>
+          <div class="meta">React • useReducer • jsPDF export</div>
+          <p class="small">Documentation tool for conversions and translations with free download after documentation via built‑in jsPDF.</p>
+          <div class="tags">
+            <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">jsPDF</span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="https://binduvarsha23.github.io/textBasedApp/" target="_blank" rel="noreferrer">Live Demo</a>
+            <a class="btn" href="https://github.com/Binduvarsha23/textBasedApp" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </article>
+
+        <!-- GameZone -->
+        <article class="card">
+          <h3>GameZone Web Gallery</h3>
+          <div class="meta">React • Bootstrap • Lazy loading</div>
+          <p class="small">Game portal with full‑screen play, filtering, and performance‑friendly lazy loading.</p>
+          <div class="tags">
+            <span class="tag">React</span><span class="tag">Bootstrap</span><span class="tag">Vercel</span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="https://gamezop-taupe.vercel.app/" target="_blank" rel="noreferrer">Live Demo</a>
+            <a class="btn" href="https://github.com/Binduvarsha23/gamezop" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </article>
+
+        <!-- Major Internship Project -->
+        <article class="card">
+          <h3>Secure Vault + Admin Console (Internship)</h3>
+          <div class="meta">Full‑stack • May 2025 – Jul 2025 • Socioclub</div>
+          <p class="small">Secure document vault with AES‑256, dynamic form builder for 15+ doc types, and decoupled Admin Panel with one‑click field visibility and granular RBAC.</p>
+          <div class="tags">
+            <span class="tag">AES‑256</span><span class="tag">RBAC</span><span class="tag">MongoDB</span><span class="tag">React</span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="https://frontend-beryl-five-64.vercel.app" target="_blank" rel="noreferrer">Live Demo</a>
+            <a class="btn" href="https://github.com/Binduvarsha23/frontend" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </article>
+
+        <!-- Internship performance highlights -->
+        <article class="card">
+          <h3>Performance & UX Enhancements</h3>
+          <div class="meta">Index‑based caching • Lazy components • Optimized APIs</div>
+          <ul class="small" style="margin:8px 0 12px 18px;">
+            <li>3× faster site speed with caching and lazy‑loaded components</li>
+            <li>&lt;1.2s load time with reduced network overhead</li>
+            <li>Instant search & filtering across 100+ entries</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Caching</span><span class="tag">API Design</span><span class="tag">UX</span>
+          </div>
+        </article>
+
+        <!-- Security Center -->
+        <article class="card">
+          <h3>Multi‑Layer Security Center</h3>
+          <div class="meta">PIN • Password • Biometric • Pattern</div>
+          <p class="small">Session re‑auth, gate protection, MongoDB‑backed security Q&A, and secure email‑based resets for PIN/password.</p>
+          <div class="tags">
+            <span class="tag">Auth</span><span class="tag">Security</span><span class="tag">Email Flows</span>
+          </div>
+        </article>
+
+        <!-- ML Project -->
+        <article class="card">
+          <h3>Plant Disease Prediction + Water Level Recommendation</h3>
+          <div class="meta">ML • CV • Recsys</div>
+          <p class="small">End‑to‑end system for detecting plant diseases and recommending irrigation levels.</p>
+          <div class="tags">
+            <span class="tag">Python</span><span class="tag">YOLOv8</span><span class="tag">ML</span>
+          </div>
+          <div class="actions">
+            <a class="btn primary" href="https://drive.google.com/file/d/1DRwdG3m-daJeyzMeIC4anR44X4O2fEyu/view?usp=drive_link" target="_blank" rel="noreferrer">Demo / Report</a>
+            <a class="btn" href="#" aria-disabled="true" title="Add your GitHub repo link here when available">GitHub (add later)</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="timeline">
+        <div class="tl-item card">
+          <strong>Full Stack Developer Intern – Socioclub</strong>
+          <div class="meta">May 2025 – July 2025</div>
+          <ul class="small" style="margin:8px 0 0 18px;">
+            <li>Built secure document vault with AES‑256, dynamic custom forms, smart UI for 15+ doc types</li>
+            <li>Decoupled Admin Panel with one‑click ad/field visibility, blocks, and granular role‑based access</li>
+            <li>3× performance gains via index‑based caching, lazy components, optimized API calls (&lt;1.2s)</li>
+            <li>Real‑time search & filtering in Password Manager and Sidebar across 100+ entries</li>
+            <li>Designed multi‑layer Security Center: PIN, password, biometric, pattern, session re‑auth, secure resets</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>Skills</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Frontend</h3>
+          <p class="small">React.js, HTML, CSS, Bootstrap, JavaScript, TypeScript, Tailwind, Responsive Design</p>
+        </div>
+        <div class="card">
+          <h3>Backend</h3>
+          <p class="small">Node.js, Express.js, MongoDB, SQL, Next.js</p>
+        </div>
+        <div class="card">
+          <h3>Tools & Others</h3>
+          <p class="small">Git, GitHub, VS Code, Postman, Google Colab, Vercel, AWS, Render, Firebase, Supabase, REST APIs, YOLOv8</p>
+        </div>
+        <div class="card">
+          <h3>Programming</h3>
+          <p class="small">Java, Python</p>
+        </div>
+        <div class="card">
+          <h3>Soft Skills</h3>
+          <p class="small">Teamwork, Leadership, Communication, Adaptability</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="achievements">
+      <h2>Achievements & Certifications</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <ul class="small" style="margin:0 0 0 18px;">
+            <li>Solved 75+ LeetCode, 40+ CodeNow, 40+ GFG (160‑Day DSA Challenge)</li>
+            <li>2nd Place – PAIE Presentation: “Chakras & Yoga Asanas” for stress relief</li>
+            <li>Zero Trust System designed with personal ideology</li>
+          </ul>
+        </div>
+        <div class="card">
+          <ul class="small" style="margin:0 0 0 18px;">
+            <li>Cisco Certifications: C++ and Python</li>
+            <li>NPTEL “Intro to IoT & Edge” – Silver + Elite</li>
+            <li>edX Java Programming</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="card">
+        <strong>B.Tech in Computer Science (Honors in Data Science)</strong>
+        <div class="meta">SRKR Engineering College • Nov 2022 – Apr 2026 • CGPA: 9.05/10</div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>Email</h3>
+          <a class="btn" href="mailto:binduvarshasunkara@gmail.com">binduvarshasunkara@gmail.com</a>
+        </div>
+        <div class="card">
+          <h3>Phone</h3>
+          <a class="btn" href="tel:+917569617143">+91 75696 17143</a>
+        </div>
+        <div class="card">
+          <h3>Links</h3>
+          <div class="actions">
+            <a class="btn" href="https://github.com/Binduvarsha23" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="btn" href="http://www.linkedin.com/in/bindu-varsha-cse" target="_blank" rel="noreferrer">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© <span id="y"></span> Bindu Varsha Sunkara • Built with plain HTML + CSS</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
